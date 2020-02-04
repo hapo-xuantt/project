@@ -15,9 +15,9 @@ class Project extends Model
         return $this->belongsTo('Customer::class');
     }
 
-    public function leader()
+    public function leadingProjects()
     {
-        return $this->belongsTo('Member::class', 'foreign_key', 'leader_id');
+        return $this->belongsTo('Member::class');
     }
 
     public function members()
