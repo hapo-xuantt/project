@@ -12,26 +12,26 @@ class Project extends Model
 
     public function customer()
     {
-        return $this->belongsTo('App\Customer');
+        return $this->belongsTo('Customer::class');
     }
 
-    public function member()
+    public function leader()
     {
-        return $this->belongsTo('App\Member');
+        return $this->belongsTo('Member::class', 'foreign_key', 'leader_id');
     }
 
     public function members()
     {
-        return $this->belongsToMany('App\Member', 'member_project', 'member_id', 'project_id');
+        return $this->belongsToMany('Member::class', 'member_project');
     }
 
     public function tasks()
     {
-        return $this->hasMany('App\Tasks');
+        return $this->hasMany('Tasks::');
     }
 
     public function statusProjects()
     {
-        return $this->hasMany('App\StatusProject');
+        return $this->hasMany('ProjectStatus::class');
     }
 }

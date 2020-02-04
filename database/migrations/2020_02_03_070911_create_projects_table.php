@@ -19,7 +19,7 @@ class CreateProjectsTable extends Migration
             $table->string('description');
             $table->date('began_at');
             $table->date('finished_at');
-            $table->integer('status_id');
+            $table->bigInteger('status_id');
             $table->integer('customer_id');
             $table->integer('leader_id');
             $table->timestamps();

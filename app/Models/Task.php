@@ -12,12 +12,12 @@ class Task extends Model
 
 	public function member()
     {
-        return $this->belongsTo('App\Member');
+        return $this->belongsTo('Member::class');
     }
 
     public function project()
     {
-        return $this->belongsTo('App\Project');
+        return $this->belongsTo('Project::class');
     }
 
     public function statusTasks()

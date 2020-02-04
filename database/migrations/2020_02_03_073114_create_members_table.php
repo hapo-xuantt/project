@@ -19,7 +19,7 @@ class CreateMembersTable extends Migration
             $table->string('account');
             $table->string('image');
             $table->string('password');
-            $table->string('email');
+            $table->unique('email');
             $table->boolean('is_admin');
             $table->timestamps();
         });

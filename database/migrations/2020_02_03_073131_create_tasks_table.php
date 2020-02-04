@@ -20,7 +20,7 @@ class CreateTasksTable extends Migration
             $table->integer('project_id');
             $table->date('began_at');
             $table->date('finished_at');
-            $table->integer('status_id');
+            $table->bigInteger('status_id');
             $table->integer('member_id');
             $table->timestamps();
         });
