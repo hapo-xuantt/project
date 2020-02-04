@@ -8,7 +8,7 @@ class StatusProject extends Model
 {
     protected $fillable = [
     	'name',
-    ]
+    ];
 
     public function project()
     {

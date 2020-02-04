@@ -8,7 +8,7 @@ class StatusTask extends Model
 {
     protected $fillable = [
     	'name',
-    ]
+    ];
 
     public function project()
     {
