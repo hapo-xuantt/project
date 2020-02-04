@@ -20,8 +20,8 @@ class Member extends Model
         return $this->hasMany('Task::class');
     }
 
-    public function leaders()
+    public function leadingProjects()
     {
-        return $this->hasMany('Project::class');
+        return $this->hasMany('Project::class', 'foreign_key', 'leader_id');
     }
 }
