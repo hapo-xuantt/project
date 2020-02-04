@@ -22,6 +22,6 @@ class Task extends Model
 
     public function statusTasks()
     {
-        return $this->hasMany('App\StatusTask');
+        return $this->hasMany('TaskStatus::class');
     }
 }

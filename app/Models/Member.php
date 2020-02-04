@@ -22,6 +22,6 @@ class Member extends Model
 
     public function leaders()
     {
-        return $this->hasMany('Project::class', 'foreign_key', 'leader_id');
+        return $this->hasMany('Project::class');
     }
 }

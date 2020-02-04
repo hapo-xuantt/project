@@ -27,7 +27,7 @@ class Project extends Model
 
     public function tasks()
     {
-        return $this->hasMany('Tasks::');
+        return $this->hasMany('Tasks::class');
     }
 
     public function statusProjects()
