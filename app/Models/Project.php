@@ -30,7 +30,7 @@ class Project extends Model
         return $this->hasMany('Tasks::class');
     }
 
-    public function statusProjects()
+    public function projectStatuses()
     {
         return $this->hasMany('ProjectStatus::class');
     }
