@@ -14,8 +14,8 @@
                     <div class="form-group">
                         <label>Họ và tên</label>
                         <input type="text" class="form-control" name="name" autocomplete="off" placeholder="Enter name" value="{{ old('name') }}">
-                        @error('name') 
-                            <strong class="alert text-danger">{{ $message }}</strong>  
+                        @error('name')
+                            <strong class="alert text-danger">{{ $message }}</strong>
                         @enderror
                     </div>
                     <div class="form-group">
@@ -34,7 +34,7 @@
                     </div>
                     <div class="form-group">
                         <label>Avatar</label>
-                        <input type="file" class="form-control @error('image') is-invalid @enderror" name="image" autocomplete="off">
+                        <input type="file" class="form-control" name="image" autocomplete="off">
                         @error('image')
                             <strong class="alert text-danger">{{ $message }}</strong>
                         @enderror
