@@ -21,7 +21,6 @@ class MemberController extends Controller
         $data = [
             'members' => Member::paginate(5),
         ];
-        // dd($data);
         return view('members.index', $data);
     }
 
