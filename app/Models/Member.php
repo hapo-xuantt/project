@@ -9,10 +9,15 @@ use Illuminate\Notifications\Notifiable;
 
 class Member extends Authenticatable
 {
+    const IS_ADMIN = [
+        0 => 'User',
+        1 => 'Admin',
+    ];
+
     use Notifiable;
 
     protected $guard = 'member';
-    
+
     protected $fillable = [
     	'name', 'account', 'image', 'password', 'email', 'is_admin',
     ];
@@ -30,5 +35,11 @@ class Member extends Authenticatable
     public function leadingProjects()
     {
         return $this->hasMany('Project::class', 'foreign_key', 'leader_id');
+    }
+
+    public function getIsAdminAttribute($is_admin){
+        foreach( self::IS_ADMIN as $key => $value ){
+            if( $is_admin == $key ) return $value;
+        }
     }
 }

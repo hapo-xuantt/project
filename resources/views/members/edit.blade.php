@@ -50,8 +50,9 @@
                     <div class="form-group">
                         <label>Quyền</label>
                         <select name="is_admin">
-                            <option value="0">User</option>
-                            <option value="1">Admin</option>
+                            @foreach(App\Models\Member::IS_ADMIN as $key => $label)
+                                <option value="{{ $key }}">{{ $label }}</option>
+                            @endforeach
                         </select>
                     </div>
                     <a href="{{ route('members.index') }}" class="btn btn-secondary">Cancel</a>

@@ -29,10 +29,7 @@ class UpdateMember extends FormRequest
             'account' => 'required|max:25',
             'password' => 'required|min:8',
             'image' => 'mimes:jpeg,jpg,png,gif|required|max:10240',
-            'email' =>  [
-                'required',
-                Rule::unique('members')->ignore($this->member)
-            ]
+            'email' => 'required|unique:users,email,$this->id,id',
         ];
     }
 }
