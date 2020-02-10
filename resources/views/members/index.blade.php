@@ -45,7 +45,9 @@
                     <td class="col-2">{{ $member->account }}</td>
                     <td class="col-2"><img src="{{ $member->image }}" class="w-100"></td>
                     <td class="col-2">{{ $member->email }}</td>
-                    <td class="col-1">{{ $member->is_admin }}</td>
+                    <td class="col-1">
+                        {{ $member->is_admin_label }}
+                    </td>
                     <td class="col-2">
                       <div class="d-flex flex-row justify-content-center align-items-center">
                         <a href="{{ route('members.edit', $member->id) }}" class="btn btn-success mr-2">Sửa</a>

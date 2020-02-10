@@ -37,9 +37,8 @@ class Member extends Authenticatable
         return $this->hasMany('Project::class', 'foreign_key', 'leader_id');
     }
 
-    public function getIsAdminAttribute($is_admin){
-        foreach( self::IS_ADMIN as $key => $value ){
-            if( $is_admin == $key ) return $value;
-        }
+    public function getIsAdminLabelAttribute()
+    {
+        return self::IS_ADMIN[$this->is_admin];
     }
 }
