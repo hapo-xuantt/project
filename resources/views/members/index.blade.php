@@ -7,7 +7,7 @@
           <div class="card">
             @if(session()->get('success'))
               <div class="alert alert-success">
-                {{ session()->get('success') }}  
+                {{ session()->get('success') }}
               </div><br/>
             @endif
             <div class="card-header">
@@ -21,12 +21,12 @@
               <div class="col-4 offset-4 form-group">
                 <div class="input-group">
                   <input type="text" name="search" placeholder="Tìm kiếm" class="form-control">
-                  <button type="submit" class="btn btn-primary">Tìm kiếm</button> 
+                  <button type="submit" class="btn btn-primary">Tìm kiếm</button>
                 </div>
-                    
+
               </div>
               </div>
-             
+
               <table class="table table-bordered table-hover">
                 <thead>
                 <tr class="d-flex">
@@ -40,7 +40,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                @foreach($members as $member) 
+                @foreach($members as $member)
                 <tr class="d-flex">
                     <th class="col-1">{{ $member->id }}</th>
                     <td class="col-2">{{ $member->name }}</td>
@@ -57,12 +57,14 @@
                           <button type="submit" class="btn btn-danger">Xóa</button>
                         </form>
                       </div>
-                    
                     </td>
                 </tr>
                 @endforeach
                 </tbody>
               </table>
+              <div class="float-right mt-2">
+                {{ $members->links() }}
+              </div>
             </div>
           </div>
         </div>

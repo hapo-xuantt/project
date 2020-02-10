@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Member;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreMember;
+use App\Http\Requests\UpdateMember;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 
 class MemberController extends Controller
 {
@@ -17,8 +19,9 @@ class MemberController extends Controller
     public function index()
     {
         $data = [
-            'members' => Member::all(),
+            'members' => Member::paginate(5),
         ];
+        // dd($data);
         return view('members.index', $data);
     }
 
@@ -27,6 +30,11 @@ class MemberController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+     public function show()
+    {
+
+    }
+
     public function create()
     {
         return view('members.create');
@@ -41,19 +49,19 @@ class MemberController extends Controller
     public function store(StoreMember $request)
     {
         $data = $request->all();
-        $image_name = time().'.'.request()->image->getClientOriginalExtension();
-        request()->image->storeAs('public/images', $image_name);
-        $image_name = 'storage/images/'.$image_name;
-        $member = array(
+        $imageName = uniqid() . '.' . request()->image->getClientOriginalExtension();
+        request()->image->storeAs('public/images', $imageName);
+        $imageName = 'storage/images/' . $imageName;
+        $member = [
             'name' => $data['name'],
             'password' => Hash::make($data['password']),
-            'account'  => $data['account'],
-            'image' => $image_name,
+            'account' => $data['account'],
+            'image' => $imageName,
             'email' => $data['email'],
             'is_admin' => $data['is_admin'],
-        );
+        ];
         $member = Member::Create($member);
-        return redirect()->route('members.index')->with('success', 'Created successfully');
+        return redirect()->route('members.index')->with('success', __('messages.create'));
     }
 
     /**
@@ -77,22 +85,22 @@ class MemberController extends Controller
      * @param  \App\Member  $member
      * @return \Illuminate\Http\Response
      */
-    public function update(StoreMember $request, $id)
+    public function update(UpdateMember $request, $id)
     {
         $data = $request->all();
-        $image_name = time().'.'.request()->image->getClientOriginalExtension();
-        request()->image->storeAs('public/images', $image_name);
-        $image_name = 'storage/images/'.$image_name;
-        $member = array(
+        $imageName = uniqid() . '.' . request()->image->getClientOriginalExtension();
+        request()->image->storeAs('public/images', $imageName);
+        $imageName = 'storage/images/' . $imageName;
+        $member = [
             'name' => $data['name'],
             'password' => Hash::make($data['password']),
             'account'  => $data['account'],
-            'image' => $image_name,
+            'image' => $imageName,
             'email' => $data['email'],
             'is_admin' => $data['is_admin'],
-        );
-        $member=Member::findOrFail($id)->update($member);
-        return redirect()->route('members.index')->with('success', 'Update successfully');
+        ];
+        $member = Member::findOrFail($id)->update($member);
+        return redirect()->route('members.index')->with('success', __('messages.update'));
     }
 
     /**
@@ -105,6 +113,6 @@ class MemberController extends Controller
     {
         $member = Member::findOrFail($id);
         $member->delete();
-        return redirect()->route('members.index');
+        return redirect()->route('members.index')->with('success', __('messages.destroy'));
     }
 }
