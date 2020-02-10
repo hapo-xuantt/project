@@ -94,7 +94,7 @@ class MemberController extends Controller
         $member = [
             'name' => $data['name'],
             'password' => Hash::make($data['password']),
-            'account'  => $data['account'],
+            'account' => $data['account'],
             'image' => $imageName,
             'email' => $data['email'],
             'is_admin' => $data['is_admin'],

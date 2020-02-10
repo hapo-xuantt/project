@@ -23,10 +23,8 @@
                   <input type="text" name="search" placeholder="Tìm kiếm" class="form-control">
                   <button type="submit" class="btn btn-primary">Tìm kiếm</button>
                 </div>
-
               </div>
               </div>
-
               <table class="table table-bordered table-hover">
                 <thead>
                 <tr class="d-flex">
