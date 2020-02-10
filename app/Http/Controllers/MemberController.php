@@ -19,7 +19,7 @@ class MemberController extends Controller
     public function index()
     {
         $data = [
-            'members' => Member::paginate(5),
+            'members' => Member::paginate(config('app.pagination')),
         ];
         return view('members.index', $data);
     }
