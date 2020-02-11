@@ -16,12 +16,17 @@ class MemberController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        $search = $request->search;
+        $members = Member::Where('name', 'like', '%' . $search . '%')->paginate(config('app.pagination'));
         $data = [
-            'members' => Member::paginate(config('app.pagination')),
+            'members' => $members,
         ];
-        return view('members.index', $data);
+        if(count($members) > 0)
+            return view('members.index', $data);
+        else
+            return view("members.index")->with('error', __('messages.search'));
     }
 
     /**
