@@ -8,6 +8,7 @@ use App\Http\Requests\StoreMember;
 use App\Http\Requests\UpdateMember;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
+use function foo\func;
 
 class MemberController extends Controller
 {
@@ -18,15 +19,25 @@ class MemberController extends Controller
      */
     public function index(Request $request)
     {
-        $search = $request->search;
-        $members = Member::Where('name', 'like', '%' . $search . '%')->paginate(config('app.pagination'));
+        $members = Member::Where(function($query) use ($request)
+        {
+            if(!empty($request->searchName)){
+                $query->Where('name', 'like', '%' . $request->searchName . '%');
+            }
+            if(isset($request->searchPermission)){
+                $query->Where('is_admin', $request->searchPermission );
+            }
+            if(!empty($request->searchEmail)){
+                $query->Where('email', 'like', '%' . $request->searchEmail . '%');
+            }
+       })->paginate(config('app.pagination'));
         $data = [
             'members' => $members,
         ];
         if(count($members) > 0)
             return view('members.index', $data);
         else
-            return view("members.index")->with('error', __('messages.search'));
+            return view("members.index")->with('message', __('messages.search'));
     }
 
     /**
