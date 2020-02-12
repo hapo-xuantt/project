@@ -1,6 +1,5 @@
 @extends('layouts.master')
 @section('content')
-
     <section class="content">
       <div class="row">
         <div class="col-12">
@@ -18,14 +17,24 @@
                 <div class="col-4 form-group">
                     <a href="{{ route('members.create') }}" class="btn btn-primary mb-2">Thêm mới</a>
                 </div>
-              <div class="col-4 offset-4 form-group">
-                <div class="input-group">
-                  <input type="text" name="search" placeholder="Tìm kiếm" class="form-control">
-                  <button type="submit" class="btn btn-primary">Tìm kiếm</button>
-                </div>
+              <div class="col-12 form-group">
+                  <form action="{{ route('members.index') }}" method="GET">
+                      <div class="input-group">
+                          <input type="search" name="searchName" placeholder="Tên" class="form-control mr-2" value="{{ old('search') }}">
+                          <input type="search" name="searchEmail" placeholder="Email" class="form-control mr-2" value="{{ old('search') }}">
+                          <select name="searchPermission">
+                              <option value="">Quyền người dùng</option>
+                              @foreach(App\Models\Member::IS_ADMIN as $key => $value)
+                                  <option value="{{ $key }}">{{ $value }}</option>
+                              @endforeach
+                          </select>
+                          <button type="submit" class="btn btn-primary">Tìm kiếm</button>
+                      </div>
+                  </form>
               </div>
               </div>
               <table class="table table-bordered table-hover">
+                  @if(isset($members))
                 <thead>
                 <tr class="d-flex">
                   <th class="col-1">STT</th>
@@ -63,7 +72,10 @@
                 </tbody>
               </table>
               <div class="float-right mt-2">
-                {{ $members->links() }}
+                {{ $members->appends($_GET)->links() }}
+                  @else
+                      {{ $message }}
+                  @endif
               </div>
             </div>
           </div>
