@@ -7,8 +7,6 @@ use Illuminate\Http\Request;
 use App\Http\Requests\StoreMember;
 use App\Http\Requests\UpdateMember;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Storage;
-use function foo\func;
 
 class MemberController extends Controller
 {
