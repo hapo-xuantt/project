@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreCustomer;
 use App\Http\Requests\UpdateCustomer;
+use Faker\Guesser\Name;
 use Illuminate\Http\Request;
 use App\Models\Customer;
 
@@ -16,15 +17,7 @@ class CustomerController extends Controller
      */
     public function index(Request $request)
     {
-        $customers = Customer::Where(function($query) use ($request)
-        {
-            if(!empty($request->searchName)){
-                $query->Where('name', 'like', '%' . $request->searchName . '%');
-            }
-            if(!empty($request->searchPhone)){
-                $query->Where('phone', 'like', '%' . $request->searchPhone . '%');
-            }
-        })->paginate(config('app.pagination'));
+        $customers = Customer::Name($request)->Phone($request)->paginate(config('app.pagination'));
         $data = [
             'customers' => $customers,
         ];
@@ -56,27 +49,10 @@ class CustomerController extends Controller
         $imageName = uniqid() . '.' . request()->image->getClientOriginalExtension();
         request()->image->storeAs('public/images', $imageName);
         $imageName = 'storage/images/' . $imageName;
-        $customer = [
-            'name' => $data['name'],
-            'manager' => $data['manager'],
-            'image' => $imageName,
-            'email' => $data['email'],
-            'phone' => $data['phone'],
-            'address' => $data['address'],
-        ];
-        $customer = Customer::Create($customer);
+        $customer = new Customer($data);
+        $customer->image = $imageName;
+        $customer->save();
         return redirect()->route('customers.index')->with('success', __('messages.create'));
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Customer  $customer
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Customer $customer)
-    {
-        //
     }
 
     /**

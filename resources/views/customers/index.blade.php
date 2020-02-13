@@ -27,8 +27,8 @@
                                 </form>
                             </div>
                         </div>
+                        @if(isset($customers))
                         <table class="table table-bordered table-hover">
-                            @if(isset($customers))
                                 <thead>
                                 <tr class="d-flex">
                                     <th class="col-1">STT</th>
@@ -67,10 +67,10 @@
                         </table>
                         <div class="float-right mt-2">
                             {{ $customers->appends($_GET)->links() }}
-                            @else
-                                {{ $message }}
-                            @endif
                         </div>
+                        @else
+                            {{ $message }}
+                        @endif
                     </div>
                 </div>
             </div>
