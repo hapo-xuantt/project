@@ -6,7 +6,7 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">Cập nhật thành viên</h3>
+                        <h3 class="card-title">Cập nhật khách hàng</h3>
                     </div>
                     <div class="card-body">
                         <form action="{{ route('customers.update', $customer->id) }}" method="POST" enctype="multipart/form-data">
