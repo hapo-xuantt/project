@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreCustomer;
 use App\Http\Requests\UpdateCustomer;
-use Faker\Guesser\Name;
 use Illuminate\Http\Request;
 use App\Models\Customer;
 
@@ -17,7 +16,7 @@ class CustomerController extends Controller
      */
     public function index(Request $request)
     {
-        $customers = Customer::Name($request)->Phone($request)->paginate(config('app.pagination'));
+        $customers = Customer::SearchByName($request)->SearchByPhone($request)->paginate(config('app.pagination'));
         $data = [
             'customers' => $customers,
         ];
@@ -49,9 +48,8 @@ class CustomerController extends Controller
         $imageName = uniqid() . '.' . request()->image->getClientOriginalExtension();
         request()->image->storeAs('public/images', $imageName);
         $imageName = 'storage/images/' . $imageName;
-        $customer = new Customer($data);
-        $customer->image = $imageName;
-        $customer->save();
+        $data['image'] = $imageName;
+        Customer::create($data);
         return redirect()->route('customers.index')->with('success', __('messages.create'));
     }
 
@@ -79,18 +77,14 @@ class CustomerController extends Controller
     public function update(UpdateCustomer $request, $id)
     {
         $data = $request->all();
-        $imageName = uniqid() . '.' . request()->image->getClientOriginalExtension();
-        request()->image->storeAs('public/images', $imageName);
-        $imageName = 'storage/images/' . $imageName;
-        $customer = [
-            'name' => $data['name'],
-            'manager' => $data['manager'],
-            'image' => $imageName,
-            'email' => $data['email'],
-            'phone' => $data['phone'],
-            'address' => $data['address'],
-        ];
-        $customer = Customer::findOrFail($id)->update($customer);
+        if( $request->hasFile('image'))
+        {
+            $imageName = uniqid() . '.' . request()->image->getClientOriginalExtension();
+            request()->image->storeAs('public/images', $imageName);
+            $imageName = 'storage/images/' . $imageName;
+            $data['image'] = $imageName;
+        }
+        Customer::findOrFail($id)->update($data);
         return redirect()->route('customers.index')->with('success', __('messages.update'));
     }
 

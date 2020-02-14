@@ -15,7 +15,7 @@ class Customer extends Model
         return $this->hasMany('Project::class');
     }
 
-    public function scopeName($query, $request)
+    public function scopeSearchByName($query, $request)
     {
         if(!empty($request->searchName)){
             $query->where('name', 'like', '%' . $request->searchName . '%');
@@ -23,7 +23,7 @@ class Customer extends Model
         return $query;
     }
 
-    public function scopePhone($query, $request){
+    public function scopeSearchByPhone($query, $request){
         if(!empty($request->searchPhone)){
             $query->where('phone', 'like', '%' . $request->searchPhone . '%');
         }
