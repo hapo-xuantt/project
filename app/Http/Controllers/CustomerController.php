@@ -77,7 +77,7 @@ class CustomerController extends Controller
     public function update(UpdateCustomer $request, $id)
     {
         $data = $request->all();
-        if( $request->hasFile('image'))
+        if ($request->hasFile('image'))
         {
             $imageName = uniqid() . '.' . request()->image->getClientOriginalExtension();
             request()->image->storeAs('public/images', $imageName);
