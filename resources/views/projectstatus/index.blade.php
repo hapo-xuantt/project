@@ -27,7 +27,7 @@
                                             </button>
                                         </div>
                                         <div class="modal-body">
-                                            <form action="{{ route('projectStatus.store') }}" method="POST">
+                                            <form action="{{ route('project_status.store') }}" method="POST">
                                                 @csrf
                                                 <div class="form-group">
                                                     <label>Tên trạng thái</label>
@@ -36,7 +36,7 @@
                                                     <strong class="alert text-danger">{{ $message }}</strong>
                                                     @enderror
                                                 </div>
-                                                <a href="{{ route('projectStatus.index') }}" class="btn btn-secondary">Cancel</a>
+                                                <a href="{{ route('project_status.index') }}" class="btn btn-secondary">Cancel</a>
                                                 <button type="submit" class="btn btn-primary">Save</button>
                                             </form>
                                         </div>
@@ -73,7 +73,7 @@
                                                                     </button>
                                                                 </div>
                                                                 <div class="modal-body">
-                                                                    <form action="{{ route('projectStatus.update', $projectStatus->id) }}" method="POST">
+                                                                    <form action="{{ route('project_status.update', $projectStatus->id) }}" method="POST">
                                                                         @method('PUT')
                                                                         @csrf
                                                                         <div class="form-group">
@@ -83,7 +83,7 @@
                                                                             <strong class="alert text-danger">{{ $message }}</strong>
                                                                             @enderror
                                                                         </div>
-                                                                        <a href="{{ route('projectStatus.index') }}" class="btn btn-secondary">Cancel</a>
+                                                                        <a href="{{ route('project_status.index') }}" class="btn btn-secondary">Cancel</a>
                                                                         <button type="submit" class="btn btn-primary">Save</button>
                                                                     </form>
                                                                 </div>
@@ -105,11 +105,11 @@
                                                                     </button>
                                                                 </div>
                                                                 <div class="modal-body">
-                                                                    <form action="{{ route('projectStatus.destroy', $projectStatus->id) }}" method="POST">
+                                                                    <form action="{{ route('project_status.destroy', $projectStatus->id) }}" method="POST">
                                                                         @method('DELETE')
                                                                         @csrf
                                                                         <p>Có xóa trạng thái này?</p>
-                                                                        <a href="{{ route('projectStatus.index') }}" class="btn btn-secondary">Cancel</a>
+                                                                        <a href="{{ route('project_status.index') }}" class="btn btn-secondary">Cancel</a>
                                                                         <button type="submit" class="btn btn-primary">Save</button>
                                                                     </form>
                                                                 </div>

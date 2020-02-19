@@ -27,7 +27,7 @@
                                             </button>
                                         </div>
                                         <div class="modal-body">
-                                            <form action="{{ route('taskStatus.store') }}" method="POST">
+                                            <form action="{{ route('task_status.store') }}" method="POST">
                                                 @csrf
                                                 <div class="form-group">
                                                     <label>Tên trạng thái</label>
@@ -36,7 +36,7 @@
                                                     <strong class="alert text-danger">{{ $message }}</strong>
                                                     @enderror
                                                 </div>
-                                                <a href="{{ route('taskStatus.index') }}" class="btn btn-secondary">Cancel</a>
+                                                <a href="{{ route('task_status.index') }}" class="btn btn-secondary">Cancel</a>
                                                 <button type="submit" class="btn btn-primary">Save</button>
                                             </form>
                                         </div>
@@ -73,7 +73,7 @@
                                                                 </button>
                                                             </div>
                                                             <div class="modal-body">
-                                                                <form action="{{ route('taskStatus.update', $taskStatus->id) }}" method="POST">
+                                                                <form action="{{ route('task_status.update', $taskStatus->id) }}" method="POST">
                                                                     @method('PUT')
                                                                     @csrf
                                                                     <div class="form-group">
@@ -83,7 +83,7 @@
                                                                         <strong class="alert text-danger">{{ $message }}</strong>
                                                                         @enderror
                                                                     </div>
-                                                                    <a href="{{ route('taskStatus.index') }}" class="btn btn-secondary">Cancel</a>
+                                                                    <a href="{{ route('task_status.index') }}" class="btn btn-secondary">Cancel</a>
                                                                     <button type="submit" class="btn btn-primary">Save</button>
                                                                 </form>
                                                             </div>
@@ -105,11 +105,11 @@
                                                                 </button>
                                                             </div>
                                                             <div class="modal-body">
-                                                                <form action="{{ route('taskStatus.destroy', $taskStatus->id) }}" method="POST">
+                                                                <form action="{{ route('task_status.destroy', $taskStatus->id) }}" method="POST">
                                                                     @method('DELETE')
                                                                     @csrf
                                                                     <p>Có xóa trạng thái này?</p>
-                                                                    <a href="{{ route('taskStatus.index') }}" class="btn btn-secondary">Cancel</a>
+                                                                    <a href="{{ route('task_status.index') }}" class="btn btn-secondary">Cancel</a>
                                                                     <button type="submit" class="btn btn-primary">Save</button>
                                                                 </form>
                                                             </div>

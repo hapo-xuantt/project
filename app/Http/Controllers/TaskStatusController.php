@@ -18,7 +18,7 @@ class TaskStatusController extends Controller
         $data = [
             'taskStatuses' => TaskStatus::all(),
         ];
-        return view('TaskStatus.index', $data);
+        return view('taskstatus.index', $data);
     }
 
     /**
@@ -30,7 +30,7 @@ class TaskStatusController extends Controller
     public function store(Request $request)
     {
         TaskStatus::create($request->all());
-        return redirect()->route('taskStatus.index')->with('success', __('messages.create'));;
+        return redirect()->route('task_status.index')->with('success', __('messages.create'));;
     }
 
     /**
@@ -44,7 +44,7 @@ class TaskStatusController extends Controller
     {
         $taskStatus = TaskStatus::findOrFail($id);
         $taskStatus->update($request->all());
-        return redirect()->route('taskStatus.index')->with('success', __('messages.update'));
+        return redirect()->route('task_status.index')->with('success', __('messages.update'));
     }
 
     /**
@@ -57,6 +57,6 @@ class TaskStatusController extends Controller
     {
         $taskStatus= TaskStatus::findOrFail($id);
         $taskStatus->delete();
-        return redirect()->route('taskStatus.index')->with('success', __('messages.destroy'));
+        return redirect()->route('task_status.index')->with('success', __('messages.destroy'));
     }
 }

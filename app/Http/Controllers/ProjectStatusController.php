@@ -17,7 +17,7 @@ class ProjectStatusController extends Controller
         $data = [
             'projectStatuses' => ProjectStatus::all(),
         ];
-        return view('ProjectStatus.index', $data);
+        return view('projectstatus.index', $data);
     }
 
     /**
@@ -29,7 +29,7 @@ class ProjectStatusController extends Controller
     public function store(Request $request)
     {
         ProjectStatus::create($request->all());
-        return redirect()->route('projectStatus.index')->with('success', __('messages.create'));;
+        return redirect()->route('project_status.index')->with('success', __('messages.create'));;
     }
 
     /**
@@ -43,7 +43,7 @@ class ProjectStatusController extends Controller
     {
         $projectStatus = ProjectStatus::findOrFail($id);
         $projectStatus->update($request->all());
-        return redirect()->route('projectStatus.index')->with('success', __('messages.update'));
+        return redirect()->route('project_status.index')->with('success', __('messages.update'));
     }
 
     /**
@@ -54,8 +54,8 @@ class ProjectStatusController extends Controller
      */
     public function destroy($id)
     {
-        $projectStatus= ProjectStatus::findOrFail($id);
+        $projectStatus = ProjectStatus::findOrFail($id);
         $projectStatus->delete();
-        return redirect()->route('projectStatus.index');
+        return redirect()->route('project_status.index');
     }
 }
