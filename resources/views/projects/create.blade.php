@@ -44,7 +44,7 @@
                                 <label>Trạng thái</label>
                                 <select class="form-control" name="status_id">
                                     @foreach($statuses as $status)
-                                        <option value="{{ $status->id }}">{{ $status->name }}</option>
+                                        <option value="{{ $status->id }}" {{ ($status->id == old('status_id')) ? 'selected': '' }}>{{ $status->name }}</option>
                                     @endforeach
                                 </select>
                                 @error('status_id')
@@ -55,7 +55,7 @@
                                 <label>Khách hàng</label>
                                 <select class="form-control" name="customer_id">
                                     @foreach($customers as $customer)
-                                    <option value="{{ $customer->id }}">{{ $customer->name }}</option>
+                                    <option value="{{ $customer->id }}" {{ ($customer->id == old('customer_id')) ? 'selected': '' }}>{{ $customer->name }}</option>
                                     @endforeach
                                 </select>
                                 @error('customer_id')
@@ -66,7 +66,7 @@
                                 <label>Leader</label>
                                 <select class="form-control" name="leader_id">
                                     @foreach($leaders as $leader)
-                                    <option value="{{ $leader->id }}">{{ $leader->name }}</option>
+                                    <option value="{{ $leader->id }}" {{ ($leader->id == old('leader_id')) ? 'selected': '' }}>{{ $leader->name }}</option>
                                     @endforeach
                                 </select>
                                 @error('leader_id')
