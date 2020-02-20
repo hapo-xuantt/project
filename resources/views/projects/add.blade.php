@@ -48,8 +48,7 @@
                                         </td>
                                         <td class="col-2">
                                             <div class="d-flex flex-row justify-content-center align-items-center">
-                                                <form action="{{ route('projects.storeMember', [$project, $member->id]) }}" method="POST" accept-charset="utf-" class="mr-2">
-                                                    @method('PUT')
+                                                <form action="{{ route('projects.store_member', [$project, $member->id]) }}" method="POST" accept-charset="utf-" class="mr-2">
                                                     @csrf
                                                     <button type="submit" class="btn btn-warning">Thêm</button>
                                                 </form>

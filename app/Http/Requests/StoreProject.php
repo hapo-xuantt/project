@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Requests;
+use Auth;
 
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -13,7 +14,7 @@ class StoreProject extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        return Auth::guard('member')->check();
     }
 
     /**

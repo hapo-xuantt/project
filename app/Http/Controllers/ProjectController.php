@@ -64,13 +64,13 @@ class ProjectController extends Controller
     public function show($id)
     {
         $project = Project::findOrFail($id);
-        $members = Project::find($id)->members()->where('project_id', $id)->get();
+        $members = Project::find($id)->members()->get();
         $data = [
             'project' => $project,
             'members' => $members
         ];
         if (count($members) > 0) return view('projects.detail', $data);
-        return view("projects.detail", ['projects' => $project])->with('message', __('messages.result'));
+        return view("projects.detail", ['project' => $project])->with('message', __('messages.result'));
     }
 
     /**
@@ -132,8 +132,8 @@ class ProjectController extends Controller
     public function storeMember($id, $member_id)
     {
         $project = Project::find($id);
-        $count = $project->members()->where('member_id', $member_id)->get();
-        if (count($count) == 0) {
+        $count = $project->members()->where('member_id', $member_id)->count();
+        if ($count == 0) {
             $project->members()->attach($member_id);
             return redirect()->route('projects.show', $id);
         } else {
@@ -146,6 +146,6 @@ class ProjectController extends Controller
         $project = Project::findOrFail($id);
         $member = $project->members()->where('member_id', $member_id)->get();
         $project->members()->detach($member);
-        return redirect()->route('projects.show', $id);
+        return redirect()->route('projects.show', $id)->with('success', __('messages.destroy'));
     }
 }

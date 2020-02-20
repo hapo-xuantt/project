@@ -60,7 +60,7 @@
                                                                     </button>
                                                                 </div>
                                                                 <div class="modal-body">
-                                                                    <form action="{{ route('projects.destroyMember', [$project->id, $member->id]) }}" method="POST">
+                                                                    <form action="{{ route('projects.destroy_member', [$project->id, $member->id]) }}" method="POST">
                                                                         @method('DELETE')
                                                                         @csrf
                                                                         <p>Có xóa thành viên này?</p>

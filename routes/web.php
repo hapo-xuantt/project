@@ -34,9 +34,10 @@ Route::prefix('projects')->name('projects.')->group(function () {
     Route::get('create', 'ProjectController@create')->name('create');
     Route::get('{project}/add', 'ProjectController@add')->name('add');
     Route::post('/', 'ProjectController@store')->name('store');
-    Route::put('{project}/{member}/store', 'ProjectController@storeMember')->name('storeMember');
+    Route::post('{project}/{member}/store', 'ProjectController@storeMember')->name('store_member');
+    Route::delete('{project}/{member}', 'ProjectController@destroyMember')->name('destroy_member');
     Route::get('{project}', 'ProjectController@show')->name('show');
     Route::get('{project}/edit', 'ProjectController@edit')->name('edit');
-    Route::put('{project}', 'ProjectController@update')->name('update');
+    Route::patch('{project}', 'ProjectController@update')->name('update');
     Route::delete('{project}', 'ProjectController@destroy')->name('destroy');
 });

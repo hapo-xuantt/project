@@ -10,7 +10,7 @@
                     </div>
                     <div class="card-body">
                         <form action="{{ route('projects.update', $project->id) }}" method="POST" enctype="multipart/form-data">
-                            @method('PUT')
+                            @method('PATCH')
                             @csrf
                             <div class="form-group">
                                 <label>Tên dự án</label>
