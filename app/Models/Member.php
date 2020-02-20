@@ -34,7 +34,7 @@ class Member extends Authenticatable
 
     public function leadingProjects()
     {
-        return $this->hasMany(Project::class, 'foreign_key', 'leader_id');
+        return $this->hasMany(Project::class, 'leader_id');
     }
 
     public function getIsAdminLabelAttribute()

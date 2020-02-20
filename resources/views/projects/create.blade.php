@@ -42,7 +42,6 @@
                             </div>
                             <div class="form-group">
                                 <label>Trạng thái</label>
-{{--                                <input type="text" class="form-control" name="status_id" autocomplete="off" placeholder="Enter phone" value="{{ old('status_id') }}">--}}
                                 <select class="form-control" name="status_id">
                                     @foreach($statuses as $status)
                                         <option value="{{ $status->id }}">{{ $status->name }}</option>
