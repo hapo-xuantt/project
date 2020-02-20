@@ -1,5 +1,6 @@
 <?php
 
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
@@ -39,4 +40,6 @@ Route::prefix('projects')->name('projects.')->group(function () {
     Route::put('{project}', 'ProjectController@update')->name('update');
     Route::delete('{project}', 'ProjectController@destroy')->name('destroy');
 });
+
+Route::resource('project_status', 'ProjectStatusController');
 
