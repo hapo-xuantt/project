@@ -24,10 +24,8 @@ class ProjectController extends Controller
             'customers' => Customer::all()
         ];
 
-        if(count($projects) > 0)
-            return view('projects.index', $data);
-        else
-            return view("projects.index")->with('message', __('messages.search'));
+        if(count($projects) > 0) return view('projects.index', $data);
+        return view("projects.index")->with('message', __('messages.search'));
     }
 
     /**
@@ -72,11 +70,8 @@ class ProjectController extends Controller
             'projects' => $projects,
             'project' => $project
         ];
-        if (count($project) > 0) {
-            return view('projects.detail', $data);
-        }
-        else
-            return view("projects.detail", ['projects' => $projects])->with('message', __('messages.result'));
+        if (count($project) > 0) return view('projects.detail', $data);
+        return view("projects.detail", ['projects' => $projects])->with('message', __('messages.result'));
     }
 
     /**
@@ -141,8 +136,7 @@ class ProjectController extends Controller
         if (count($count) == 0) {
             $project->members()->attach($member_id);
             return redirect()->route('projects.show', $id);
-        }
-        else {
+        } else {
             return redirect()->route('projects.add', $id)->with('alert', __('messages.exist'));
         }
     }
