@@ -24,17 +24,17 @@ class Member extends Authenticatable
 
     public function projects()
     {
-        return $this->belongsToMany('Project::class', 'member_project');
+        return $this->belongsToMany(Project::class, 'member_project');
     }
 
     public function tasks()
     {
-        return $this->hasMany('Task::class');
+        return $this->hasMany(Task::class);
     }
 
     public function leadingProjects()
     {
-        return $this->hasMany('Project::class', 'foreign_key', 'leader_id');
+        return $this->hasMany(Project::class, 'foreign_key', 'leader_id');
     }
 
     public function getIsAdminLabelAttribute()
