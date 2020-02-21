@@ -1,10 +1,11 @@
 <?php
 
 namespace App\Http\Requests;
+use Auth;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateMember extends FormRequest
+class StoreProject extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,7 +14,7 @@ class UpdateMember extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        return Auth::guard('member')->check();
     }
 
     /**
@@ -24,11 +25,10 @@ class UpdateMember extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|max:100',
-            'account' => 'required|max:25',
-            'password' => 'required|min:8',
-            'image' => 'mimes:jpeg,jpg,png,gif|max:10240',
-            'email' => 'required|unique:members,email,'.$this->member,
+            'name' => 'required|max:50',
+            'description' => 'required',
+            'began_at' => 'required|date',
+            'finished_at' => 'required|date|after_or_equal:began_at',
         ];
     }
 }

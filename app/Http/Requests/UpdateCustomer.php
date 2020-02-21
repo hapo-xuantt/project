@@ -27,7 +27,7 @@ class UpdateCustomer extends FormRequest
             'name' => 'required|max:100',
             'manager' => 'required|max:50',
             'image' => 'mimes:jpeg,jpg,png,gif|max:10240',
-            'email' => 'required|unique:users,email,$this->id,id',
+            'email' => 'required|unique:customers,email,'.$this->customer,
             'phone' => 'required|min:10|max:20',
             'address' => 'required',
         ];
