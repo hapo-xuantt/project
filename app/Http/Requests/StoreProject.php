@@ -27,8 +27,8 @@ class StoreProject extends FormRequest
         return [
             'name' => 'required|max:50',
             'description' => 'required',
-            'began_at' => 'required',
-            'finished_at' => 'required',
+            'began_at' => 'required|date',
+            'finished_at' => 'required|date|after_or_equal:began_at',
         ];
     }
 }
