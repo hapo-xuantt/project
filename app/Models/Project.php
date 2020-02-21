@@ -37,10 +37,17 @@ class Project extends Model
         return $this->belongsTo(ProjectStatus::class, 'status_id');
     }
 
-    public function scopeSearchByName($query, $request){
-        if(isset($request->searchByName)){
+    public function scopeSearchByName($query, $request)
+    {
+        if (isset($request->searchByName)) {
             $query->where('name', 'like', '%' . $request->searchByName . '%');
         }
         return $query;
+    }
+
+    public function checkIsMyMember($memberId)
+    {
+        $count = $this->members()->where('member_id', $memberId)->count();
+        return $count != 0;
     }
 }

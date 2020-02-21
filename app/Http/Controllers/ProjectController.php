@@ -23,8 +23,8 @@ class ProjectController extends Controller
             'projects' => $projects
         ];
 
-        if(count($projects) > 0) return view('projects.index', $data);
-        return view("projects.index")->with('message', __('messages.search'));
+        if (count($projects) > 0) return view('projects.index', $data);
+        return view('projects.index')->with('message', __('messages.search'));
     }
 
     /**
@@ -64,13 +64,13 @@ class ProjectController extends Controller
     public function show($id)
     {
         $project = Project::findOrFail($id);
-        $members = Project::find($id)->members()->get();
+        $members = Project::find($id)->members;
         $data = [
             'project' => $project,
             'members' => $members
         ];
         if (count($members) > 0) return view('projects.detail', $data);
-        return view("projects.detail", ['project' => $project])->with('message', __('messages.result'));
+        return view('projects.detail', ['project' => $project])->with('message', __('messages.result'));
     }
 
     /**
@@ -116,35 +116,29 @@ class ProjectController extends Controller
         return redirect()->route('projects.index')->with('success', __('messages.destroy'));
     }
 
-    public function add($id)
+    public function add($id, Request $request)
     {
         $members = Member::paginate(config('app.pagination'));
+        $project = Project::find($id);
         $data = [
             'members' => $members,
-            'project' => $id,
+            'project' => $project,
         ];
-        if (count($members) > 0)
-            return view('projects.add', $data);
-        else
-            return view("projects.add")->with('message', __('messages.search'));
+        if (count($members) > 0) return view('projects.add', $data);
+        return view('projects.add')->with('message', __('messages.search'));
     }
 
-    public function storeMember($id, $member_id)
+    public function storeMember($id, $memberId)
     {
         $project = Project::find($id);
-        $count = $project->members()->where('member_id', $member_id)->count();
-        if ($count == 0) {
-            $project->members()->attach($member_id);
-            return redirect()->route('projects.show', $id);
-        } else {
-            return redirect()->route('projects.add', $id)->with('alert', __('messages.exist'));
-        }
+        if (!$project->checkIsMyMember($memberId)) $project->members()->attach($memberId);
+        return redirect()->route('projects.show', $id);
     }
 
-    public function destroyMember($id, $member_id)
+    public function destroyMember($id, $memberId)
     {
         $project = Project::findOrFail($id);
-        $member = $project->members()->where('member_id', $member_id)->get();
+        $member = $project->members()->where('member_id', $memberId)->get();
         $project->members()->detach($member);
         return redirect()->route('projects.show', $id)->with('success', __('messages.destroy'));
     }

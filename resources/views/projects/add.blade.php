@@ -48,15 +48,14 @@
                                         </td>
                                         <td class="col-2">
                                             <div class="d-flex flex-row justify-content-center align-items-center">
-                                                <form action="{{ route('projects.store_member', [$project, $member->id]) }}" method="POST" accept-charset="utf-" class="mr-2">
-                                                    @csrf
-                                                    <button type="submit" class="btn btn-warning">Thêm</button>
-                                                </form>
-                                                <form action="{{ route('members.destroy', $member->id) }}" method="POST" accept-charset="utf-">
-                                                    @method('DELETE')
-                                                    @csrf
-                                                    <button type="submit" class="btn btn-danger">Xóa</button>
-                                                </form>
+                                                @if (!$project->checkIsMyMember($member->id))
+                                                    <form action="{{ route('projects.store_member', [$project, $member->id]) }}" method="POST" accept-charset="utf-" class="mr-2">
+                                                        @csrf
+                                                        <button type="submit" class="btn btn-warning">Thêm</button>
+                                                    </form>
+                                                @else
+                                                    <button type="submit" class="btn btn-warning" disabled>Thêm</button>
+                                                @endif
                                             </div>
                                         </td>
                                     </tr>

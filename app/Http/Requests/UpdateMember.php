@@ -3,7 +3,6 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
 class UpdateMember extends FormRequest
 {
@@ -28,8 +27,8 @@ class UpdateMember extends FormRequest
             'name' => 'required|max:100',
             'account' => 'required|max:25',
             'password' => 'required|min:8',
-            'image' => 'mimes:jpeg,jpg,png,gif|required|max:10240',
-            'email' => 'required|unique:users,email,$this->id,id',
+            'image' => 'mimes:jpeg,jpg,png,gif|max:10240',
+            'email' => 'required|unique:members,email,'.$this->member,
         ];
     }
 }
