@@ -19,7 +19,9 @@ class TaskController extends Controller
      */
     public function index(Request $request)
     {
-        $tasks = Task::SearchByProject($request)->SearchByMember($request)->with('project', 'member', 'taskStatuses')->paginate(config('app.pagination'));
+        $tasks = Task::searchByProject($request)->searchByMember($request)
+            ->with('project', 'member', 'taskStatuses')
+            ->paginate(config('app.pagination'));
         $data = [
             'tasks' => $tasks
         ];
@@ -50,8 +52,8 @@ class TaskController extends Controller
     public function store(StoreTask $request)
     {
         Task::create($request->all());
-        return redirect()->route('tasks.index')->with('success', __('messages.create'));
-
+        return redirect()->route('tasks.index')
+            ->with('success', __('messages.create'));
     }
 
     /**
@@ -62,7 +64,7 @@ class TaskController extends Controller
      */
     public function show($id)
     {
-        $task = Task::find($id);
+        $task = Task::findOrFail($id);
         $project = $task->project;
         $data  = [
             'task' => $task,
@@ -81,9 +83,9 @@ class TaskController extends Controller
     public function edit($id)
     {
         $data = [
-          'task' => Task::findOrFail($id),
-          'members' => Member::all(),
-          'projects' => Project::all(),
+            'task' => Task::findOrFail($id),
+            'members' => Member::all(),
+            'projects' => Project::all(),
             'statuses' => TaskStatus::all()
         ];
         return view('tasks.edit', $data);
@@ -99,7 +101,8 @@ class TaskController extends Controller
     public function update(UpdateTask $request, $id)
     {
         Task::findOrFail($id)->update($request->all());
-        return redirect()->route('tasks.index')->with('success', __('messages.update'));
+        return redirect()->route('tasks.index')
+            ->with('success', __('messages.update'));
     }
 
     /**
@@ -112,13 +115,14 @@ class TaskController extends Controller
     {
         $task = Task::findOrFail($id);
         $task->delete();
-        return redirect()->route('tasks.index')->with('success', __('messages.destroy'));
+        return redirect()->route('tasks.index')
+            ->with('success', __('messages.destroy'));
     }
 
     public function add($id)
     {
         $data = [
-            'project' => Project::find($id),
+            'project' => Project::findOrFail($id),
             'members' => Member::all(),
             'statuses' => TaskStatus::all()
         ];
@@ -127,7 +131,7 @@ class TaskController extends Controller
 
     public function assign(Request $request, $id)
     {
-        Task::find($id)->update($request->all());
+        Task::findOrFail($id)->update($request->all());
         return redirect()->route('tasks.show', $id);
     }
 }

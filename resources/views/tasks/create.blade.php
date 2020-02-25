@@ -15,7 +15,7 @@
                                 <label>Tên dự án</label>
                                 <select name="project_id" class="form-control">
                                     @foreach($projects as $project)
-                                        <option value="{{ $project->id }}"> {{ $project->name }}</option>
+                                        <option value="{{ $project->id }}" {{ ($project->id == old('project_id')) ? 'selected': '' }}> {{ $project->name }}</option>
                                     @endforeach
                                 </select>
                                 @error('project_id')
@@ -39,7 +39,7 @@
                                 <label>Nhân viên thực hiện</label>
                                 <select name="member_id" class="form-control">
                                     @foreach($members as $member)
-                                        <option value="{{ $member->id }}"> {{ $member->name }}</option>
+                                        <option value="{{ $member->id }}" {{ ($member->id == old('member_id')) ? 'selected': '' }}> {{ $member->name }}</option>
                                     @endforeach
                                 </select>
                                 @error('member_id')
@@ -52,7 +52,7 @@
                                 <label>Trạng thái</label>
                                 <select name="status_id" class="form-control">
                                     @foreach($statuses as $status)
-                                        <option value="{{ $status->id }}"> {{ $status->name }}</option>
+                                        <option value="{{ $status->id }}" {{ ($status->id == old('status_id')) ? 'selected': '' }}> {{ $status->name }}</option>
                                     @endforeach
                                 </select>
                                 @error('status_id')
@@ -85,7 +85,8 @@
                         <div class="col-8">
                             <div class="form-group">
                                 <label>Mô tả task</label>
-                                <textarea type="text" class="form-control" name="description" autocomplete="off" placeholder="Enter description" value="{{ old('description') }}">
+                                <textarea type="text" class="form-control" name="description" autocomplete="off" placeholder="Enter description">
+                                    {{ old('description') }}
                                 </textarea>
                                 @error('description')
                                 <strong class="alert text-danger">{{ $message }}</strong>

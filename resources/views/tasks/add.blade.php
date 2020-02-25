@@ -12,15 +12,12 @@
                     <div class="row">
                         <div class="col-4">
                             <div class="form-group">
-                                <label>Tên dự án</label>
-                                <select name="project_id" class="form-control">
-                                        <option value="{{ $project->id }}"> {{ $project->name }}</option>
-                                </select>
-                                @error('project_id')
-                                <strong class="alert text-danger">{{ $message }}</strong>
-                                @enderror
+                                <input type="hidden" name="project_id" value="{{ $project->id }}">
+                                <p><b>Tên dự án: </b>{{ $project->name }}</p>
                             </div>
                         </div>
+                    </div>
+                    <div class="row">
                         <div class="col-4">
                             <div class="form-group">
                                 <label>Tên task</label>
@@ -37,7 +34,7 @@
                                 <label>Nhân viên thực hiện</label>
                                 <select name="member_id" class="form-control">
                                     @foreach($members as $member)
-                                        <option value="{{ $member->id }}"> {{ $member->name }}</option>
+                                        <option value="{{ $member->id }}" {{ ($member->id == old('member_id')) ? 'selected': '' }}> {{ $member->name }}</option>
                                     @endforeach
                                 </select>
                                 @error('member_id')
@@ -50,7 +47,7 @@
                                 <label>Trạng thái</label>
                                 <select name="status_id" class="form-control">
                                     @foreach($statuses as $status)
-                                        <option value="{{ $status->id }}"> {{ $status->name }}</option>
+                                        <option value="{{ $status->id }}" {{ ($status->id == old('status_id')) ? 'selected': '' }}> {{ $status->name }}</option>
                                     @endforeach
                                 </select>
                                 @error('status_id')
@@ -83,7 +80,8 @@
                         <div class="col-8">
                             <div class="form-group">
                                 <label>Mô tả task</label>
-                                <textarea type="text" class="form-control" name="description" autocomplete="off" placeholder="Enter description" value="{{ old('description') }}">
+                                <textarea type="text" class="form-control" name="description" autocomplete="off" placeholder="Enter description">
+                                    {{ old('description') }}
                                 </textarea>
                                 @error('description')
                                 <strong class="alert text-danger">{{ $message }}</strong>

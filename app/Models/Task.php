@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 
 class Task extends Model
 {
@@ -25,15 +26,21 @@ class Task extends Model
         return $this->belongsto(TaskStatus::class, 'status_id');
     }
 
-    public function scopeSearchByProject($query, $request)
+    public function scopesearchByProject($query, $request)
     {
-        $query->join('projects', 'tasks.project_id', '=', 'projects.id')->select('tasks.*')->where('projects.name', 'like', '%' . $request->searchByProject . '%');
+        $searchByProject = $request->searchByProject;
+        $query->whereHas('project', function ($query) use ($searchByProject){
+           $query->where('name', 'like',  '%' .  $searchByProject . '%');
+        });
         return $query;
     }
 
-    public function scopeSearchByMember($query, $request)
+    public function scopesearchByMember($query, $request)
     {
-        $query->join('members', 'tasks.member_id', '=', 'members.id')->select('tasks.*')->where('members.name', 'like', '%' . $request->searchByMember . '%');
+        $searchByMember = $request->searchByMember;
+        $query->whereHas('member', function ($query) use ($searchByMember){
+            $query->where('name', 'like',  '%' .  $searchByMember . '%');
+        });
         return $query;
     }
 }
