@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -12,6 +12,6 @@ class TaskStatus extends Model
 
     public function project()
     {
-        return $this->belongsTo('Project::class', 'foreign_key', 'status_id');
+        return $this->hasMany(Project::class, 'status_id', 'id');
     }
 }
