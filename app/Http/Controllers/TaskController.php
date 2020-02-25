@@ -19,7 +19,7 @@ class TaskController extends Controller
      */
     public function index(Request $request)
     {
-        $tasks = Task::SearchByProject($request)->SearchByMember($request)->paginate(config('app.pagination'));
+        $tasks = Task::SearchByProject($request)->SearchByMember($request)->with('project', 'member', 'taskStatuses')->paginate(config('app.pagination'));
         $data = [
             'tasks' => $tasks
         ];
