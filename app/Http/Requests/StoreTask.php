@@ -27,7 +27,6 @@ class StoreTask extends FormRequest
     {
         $projectId = $request->project_id;
         $project= Project::findOrFail($projectId);
-
         return [
             'name' => 'required|max:50',
             'description' => 'required',

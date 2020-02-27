@@ -9,6 +9,7 @@ use App\Models\Member;
 use App\Models\Task;
 use App\Models\TaskStatus;
 use Illuminate\Http\Request;
+use Auth;
 
 class TaskController extends Controller
 {
@@ -37,10 +38,15 @@ class TaskController extends Controller
     {
         $data = [
             'projects' => Project::all(),
-            'members' => Member::all(),
             'statuses' => TaskStatus::all()
         ];
         return view('tasks.create', $data);
+    }
+
+    public function showMemberProject($id)
+    {
+        $member = Project::findOrFail($id)->members;
+        return response()->json($member);
     }
 
     /**
@@ -65,10 +71,8 @@ class TaskController extends Controller
     public function show($id)
     {
         $task = Task::findOrFail($id);
-        $project = $task->project;
         $data  = [
             'task' => $task,
-            'project' => $project,
             'members' => Member::all()
         ];
         return view('tasks.detail', $data);
@@ -82,13 +86,16 @@ class TaskController extends Controller
      */
     public function edit($id)
     {
-        $data = [
-            'task' => Task::findOrFail($id),
-            'members' => Member::all(),
-            'projects' => Project::all(),
-            'statuses' => TaskStatus::all()
-        ];
-        return view('tasks.edit', $data);
+        $task = Task::findOrFail($id);
+        if(Auth::user()->is_admin == 1 || Auth::id() == $task->project->leader_id) {
+            $data = [
+                'task' => Task::findOrFail($id),
+                'projects' => Project::all(),
+                'statuses' => TaskStatus::all()
+            ];
+            return view('tasks.edit', $data);
+        }
+        else return redirect()->route('tasks.index');
     }
 
     /**
@@ -114,16 +121,19 @@ class TaskController extends Controller
     public function destroy($id)
     {
         $task = Task::findOrFail($id);
-        $task->delete();
-        return redirect()->route('tasks.index')
-            ->with('success', __('messages.destroy'));
+        if(Auth::user()->is_admin == 1 || Auth::id() == $task->project->leader_id) {
+            $task->delete();
+            return redirect()->route('tasks.index')
+                ->with('success', __('messages.destroy'));
+        }
+        else return redirect()->route('tasks.index');
     }
 
     public function add($id)
     {
         $data = [
             'project' => Project::findOrFail($id),
-            'members' => Member::all(),
+            'members' => Project::findOrFail($id)->members,
             'statuses' => TaskStatus::all()
         ];
         return view('tasks.add', $data);

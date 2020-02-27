@@ -14,10 +14,11 @@
                         <div class="col-4">
                             <div class="form-group">
                                 <label>Tên dự án</label>
-                                <select name="project_id" class="form-control">
+                                <select name="project_id" class="form-control" id="project">
                                     @foreach($projects as $project)
-                                        <option value="{{ $project->id }}" {{ ($project->id == old('project_id', $project->project_id)) ? 'selected': '' }}> {{ $project->name }}</option>
+                                        <option value="{{ $project->id }}" {{ ($project->id == old('project_id', $task->project_id)) ? 'selected': '' }}> {{ $project->name }}</option>
                                     @endforeach
+                                  <input class="text" type="hidden">
                                 </select>
                                 @error('project_id')
                                 <strong class="alert text-danger">{{ $message }}</strong>
@@ -38,11 +39,7 @@
                         <div class="col-4">
                             <div class="form-group">
                                 <label>Nhân viên thực hiện</label>
-                                <select name="member_id" class="form-control">
-                                    @foreach($members as $member)
-                                        <option value="{{ $member->id }}" {{ ($member->id == old('member_id', $member->member_id)) ? 'selected': '' }}> {{ $member->name }}</option>
-                                    @endforeach
-                                </select>
+                                <select name="member_id" class="form-control" id="member"></select>
                                 @error('member_id')
                                 <strong class="alert text-danger">{{ $message }}</strong>
                                 @enderror
@@ -66,7 +63,7 @@
                         <div class="col-4">
                             <div class="form-group">
                                 <label>Thời gian bắt đầu</label>
-                                <input type="date" class="form-control" name="began_at" value="{{ old('began_at', $project->began_at) }}" autocomplete="off">
+                                <input class="form-control" data-date-format="yyyy-mm-dd" id="began_at" name="began_at" value="{{ old('began_at', $project->began_at) }}" autocomplete="off">
                                 @error('began_at')
                                 <strong class="alert text-danger">{{ $message }}</strong>
                                 @enderror
@@ -75,7 +72,7 @@
                         <div class="col-4">
                             <div class="form-group">
                                 <label>Thời gian kết thúc</label>
-                                <input type="date" class="form-control" name="finished_at" value="{{ old('finished_at', $project->finished_at) }}" autocomplete="off">
+                                <input class="form-control" data-date-format="yyyy-mm-dd" id="finished_at" name="finished_at" value="{{ old('finished_at', $project->finished_at) }}" autocomplete="off">
                                 @error('finished_at')
                                 <strong class="alert text-danger">{{ $message }}</strong>
                                 @enderror
@@ -99,5 +96,37 @@
                 </form>
             </div>
         </div>
+        <script>
+            $(document).ready(function () {
+                $('#began_at').datepicker({
+                    format: 'yyyy-mm-dd',
+                });
+            });
+            $(document).ready(function () {
+                $('#finished_at').datepicker({
+                    format: 'yyyy-mm-dd',
+                });
+            });
+            $('#project').change(function(){
+                var project_id = $(this).val();
+
+                $.ajax({
+                    url: 'show_member_project/'+project_id,
+                    method: 'GET',
+                    data: {
+                        project_id: project_id,
+                    },
+                    success: function(data) {
+                        // $("#member").empty();
+                        $("#member").html($(this).text());
+                        $.each(data, function (key, value) {
+                            $("#member").append(
+                                "<option value=" + value.id + ">" + value.name + "</option>"
+                            );
+                        });
+                    }
+                });
+            });
+        </script>
     </section>
 @endsection

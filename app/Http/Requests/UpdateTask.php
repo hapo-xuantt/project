@@ -33,7 +33,7 @@ class UpdateTask extends FormRequest
             'description' => 'required',
             'began_at' => [
                 'required',
-                'date',
+                'date_format:m/d/Y',
                 'after_or_equal:' . $project['began_at'],
                 'before_or_equal:' . $project['finished_at']
             ],

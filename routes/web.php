@@ -6,25 +6,10 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::group(['middleware' => ['auth:member']], function (){
-    Route::prefix('members')->name('members.')->group(function () {
-        Route::get('/', 'MemberController@index')->name('index');
-        Route::get('create', 'MemberController@create')->name('create');
-        Route::post('/', 'MemberController@store')->name('store');
-        Route::get('{member}', 'MemberController@show')->name('show');
-        Route::get('{member}/edit', 'MemberController@edit')->name('edit');
-        Route::put('{member}', 'MemberController@update')->name('update');
-        Route::delete('{member}', 'MemberController@destroy')->name('destroy');
-    });
 
-    Route::prefix('customers')->name('customers.')->group(function () {
-        Route::get('/', 'CustomerController@index')->name('index');
-        Route::get('create', 'CustomerController@create')->name('create');
-        Route::post('/', 'CustomerController@store')->name('store');
-        Route::get('{customer}', 'CustomerController@show')->name('show');
-        Route::get('{customer}/edit', 'CustomerController@edit')->name('edit');
-        Route::put('{customer}', 'CustomerController@update')->name('update');
-        Route::delete('{customer}', 'CustomerController@destroy')->name('destroy');
-    });
+    Route::resource('members', 'MemberController');
+
+    Route::resource('customers', 'CustomerController');
 
     Route::resource('project_status', 'ProjectStatusController');
 
@@ -53,6 +38,7 @@ Route::group(['middleware' => ['auth:member']], function (){
         Route::patch('{task}', 'TaskController@update')->name('update');
         Route::patch('{task}/assign', 'TaskController@assign')->name('assign');
         Route::delete('{task}', 'TaskController@destroy')->name('destroy');
+        Route::get('show_member_project/{id}','TaskController@showMemberProject')->name('show_member_project');
     });
 });
 

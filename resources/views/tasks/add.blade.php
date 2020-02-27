@@ -60,7 +60,7 @@
                         <div class="col-4">
                             <div class="form-group">
                                 <label>Thời gian bắt đầu</label>
-                                <input type="date" class="form-control" name="began_at" value="{{ old('began_at') }}" autocomplete="off">
+                                <input class="form-control" id="began_at"  name="began_at" value="{{ old('began_at') }}" autocomplete="off">
                                 @error('began_at')
                                 <strong class="alert text-danger">{{ $message }}</strong>
                                 @enderror
@@ -69,7 +69,7 @@
                         <div class="col-4">
                             <div class="form-group">
                                 <label>Thời gian kết thúc</label>
-                                <input type="date" class="form-control" name="finished_at" value="{{ old('finished_id') }}" autocomplete="off">
+                                <input class="form-control" id="finished_at" data-date-format="yyyy-mm-dd" name="finished_at" value="{{ old('finished_id') }}" autocomplete="off">
                                 @error('finished_at')
                                 <strong class="alert text-danger">{{ $message }}</strong>
                                 @enderror
@@ -94,5 +94,15 @@
                 </form>
             </div>
         </div>
+        <script>
+            $(document).ready(function () {
+                $('#began_at').datepicker({
+                    format: 'yyyy-mm-dd',
+                });
+                $('#finished_at').datepicker({
+                    format: 'yyyy-mm-dd',
+                });
+            });
+        </script>
     </section>
 @endsection
