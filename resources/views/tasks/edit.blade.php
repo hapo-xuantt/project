@@ -1,6 +1,6 @@
 @extends('layouts.master')
 @section('content')
-
+    <input id="oldMemberId" type="hidden" value="{{ old('member_id') }}">
     <section class="content">
         <div class="card">
             <div class="card-header">
@@ -101,15 +101,33 @@
                 $('#began_at').datepicker({
                     format: 'yyyy-mm-dd',
                 });
-            });
-            $(document).ready(function () {
                 $('#finished_at').datepicker({
                     format: 'yyyy-mm-dd',
                 });
+                if($('.check-error').length != 0) {
+                    let project_id = $("#project").val();
+                    $.ajax({
+                        url: 'show_member_project/' + project_id,
+                        method: 'GET',
+                        data: {
+                            project_id: project_id,
+                        },
+                        success: function (data) {
+                            let html = '';
+                            $.each(data, function (key, value) {
+                                let selected = '';
+                                if (value.id == $('#oldMemberId').val()) {
+                                    selected = "selected";
+                                }
+                                html += "<option " + selected + " value="+ value.id+ ">" + value.name + "</option>";
+                            });
+                            $("#member").html(html);
+                        },
+                    });
+                }
             });
             $('#project').change(function(){
                 var project_id = $(this).val();
-
                 $.ajax({
                     url: 'show_member_project/'+project_id,
                     method: 'GET',
@@ -117,8 +135,6 @@
                         project_id: project_id,
                     },
                     success: function(data) {
-                        // $("#member").empty();
-                        $("#member").html($(this).text());
                         $.each(data, function (key, value) {
                             $("#member").append(
                                 "<option value=" + value.id + ">" + value.name + "</option>"

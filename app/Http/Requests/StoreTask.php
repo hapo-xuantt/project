@@ -36,7 +36,7 @@ class StoreTask extends FormRequest
                 'after_or_equal:' . $project['began_at'],
                 'before_or_equal:' . $project['finished_at']
             ],
-            'finished_at' => 'required|date|after_or_equal:began_at|before:' . $project['finished_at'],
+            'finished_at' => 'required|date|after_or_equal:began_at|before_or_equal:' . $project['finished_at'],
         ];
     }
 }

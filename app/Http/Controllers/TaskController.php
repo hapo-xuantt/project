@@ -71,9 +71,10 @@ class TaskController extends Controller
     public function show($id)
     {
         $task = Task::findOrFail($id);
+        $members = Project::findOrFail($task->project_id)->members;
         $data  = [
             'task' => $task,
-            'members' => Member::all()
+            'members' => $members,
         ];
         return view('tasks.detail', $data);
     }

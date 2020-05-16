@@ -5,6 +5,7 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
+
 Route::group(['middleware' => ['auth:member']], function (){
 
     Route::resource('members', 'MemberController');

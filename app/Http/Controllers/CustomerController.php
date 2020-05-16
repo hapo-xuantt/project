@@ -6,6 +6,7 @@ use App\Http\Requests\StoreCustomer;
 use App\Http\Requests\UpdateCustomer;
 use Illuminate\Http\Request;
 use App\Models\Customer;
+use Auth;
 
 class CustomerController extends Controller
 {
@@ -33,7 +34,9 @@ class CustomerController extends Controller
      */
     public function create()
     {
+        if(Auth::user()->is_admin == 1)
         return view('customers.create');
+        return view('customers.index')->with('message', __('messages.permission'));
     }
 
     /**
@@ -61,10 +64,13 @@ class CustomerController extends Controller
      */
     public function edit($id)
     {
-        $data = [
-            'customer' => Customer::findOrFail($id),
-        ];
-        return view('customers.edit', $data);
+        if (Auth::user()->is_admin == 1) {
+            $data = [
+                'customer' => Customer::findOrFail($id),
+            ];
+            return view('customers.edit', $data);
+        }
+        return view('customers.index')->with('message', __('messages.permission'));
     }
 
     /**
@@ -96,7 +102,10 @@ class CustomerController extends Controller
     public function destroy($id)
     {
         $customer = Customer::findOrFail($id);
-        $customer->delete();
-        return redirect()->route('customers.index')->with('success', __('messages.destroy'));
+        if (Auth::user()->is_admin == 1) {
+            $customer->delete();
+            return redirect()->route('customers.index')->with('success', __('messages.destroy'));
+        }
+        return view('customers.index')->with('message', __('messages.permission'));
     }
 }

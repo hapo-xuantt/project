@@ -1,4 +1,4 @@
-@extends('layouts.master')
+@extends('layouts.master_login')
 
 @section('content')
 <div class="card">

@@ -39,7 +39,6 @@
                             <div class="form-group">
                                 <label>Nhân viên thực hiện</label>
                                 <select name="member_id" class="form-control" id="member">
-                                    <option hidden value=""></option>
                                 </select>
                                 @error('member_id')
                                 <strong class="alert text-danger check-error">{{ $message }}</strong>

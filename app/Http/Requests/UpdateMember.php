@@ -26,7 +26,6 @@ class UpdateMember extends FormRequest
         return [
             'name' => 'required|max:100',
             'account' => 'required|max:25',
-            'password' => 'required|min:8',
             'image' => 'mimes:jpeg,jpg,png,gif|max:10240',
             'email' => 'required|unique:members,email,'.$this->member,
         ];
