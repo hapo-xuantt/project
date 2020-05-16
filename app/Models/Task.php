@@ -1,8 +1,9 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 
 class Task extends Model
 {
@@ -12,16 +13,34 @@ class Task extends Model
 
 	public function member()
     {
-        return $this->belongsTo('Member::class');
+        return $this->belongsTo(Member::class);
     }
 
     public function project()
     {
-        return $this->belongsTo('Project::class');
+        return $this->belongsTo(Project::class);
     }
 
     public function taskStatuses()
     {
-        return $this->hasMany('TaskStatus::class');
+        return $this->belongsto(TaskStatus::class, 'status_id');
+    }
+
+    public function scopesearchByProject($query, $request)
+    {
+        $searchByProject = $request->searchByProject;
+        $query->whereHas('project', function ($query) use ($searchByProject){
+           $query->where('name', 'like',  '%' .  $searchByProject . '%');
+        });
+        return $query;
+    }
+
+    public function scopesearchByMember($query, $request)
+    {
+        $searchByMember = $request->searchByMember;
+        $query->whereHas('member', function ($query) use ($searchByMember){
+            $query->where('name', 'like',  '%' .  $searchByMember . '%');
+        });
+        return $query;
     }
 }

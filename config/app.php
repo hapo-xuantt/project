@@ -56,6 +56,8 @@ return [
 
     'asset_url' => env('ASSET_URL', null),
 
+    'pagination' => env('APP_PAGINATION', 10),
+
     /*
     |--------------------------------------------------------------------------
     | Application Timezone

@@ -8,6 +8,7 @@ use App\Models\Member;
 use App\Models\Project;
 use App\Models\ProjectStatus;
 use Illuminate\Http\Request;
+use Auth;
 
 class ProjectController extends Controller
 {
@@ -34,12 +35,15 @@ class ProjectController extends Controller
      */
     public function create()
     {
-        $data = [
-            'customers' => Customer::all(),
-            'leaders' => Member::all(),
-            'statuses' => ProjectStatus::all()
-        ];
-        return view('projects.create', $data);
+        if (Auth::user()->is_admin ==1) {
+            $data = [
+                'customers' => Customer::all(),
+                'leaders' => Member::all(),
+                'statuses' => ProjectStatus::all()
+            ];
+            return view('projects.create', $data);
+        }
+        return view('projects.index')->with('message', __('messages.permission'));
     }
 
     /**
@@ -112,8 +116,12 @@ class ProjectController extends Controller
     public function destroy($id)
     {
         $project = Project::findOrFail($id);
-        $project->delete();
-        return redirect()->route('projects.index')->with('success', __('messages.destroy'));
+        $count = $project->members->count();
+        if ($count === 0) {
+            $project->delete();
+            return redirect()->route('projects.index')->with('success', __('messages.destroy'));
+        }
+        return redirect()->route('projects.index')->with('alert', __('messages.delete'));
     }
 
     public function add($id, Request $request)

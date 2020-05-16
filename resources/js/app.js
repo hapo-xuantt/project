@@ -12,7 +12,11 @@ require('./bootstrap');
 
  require('../../node_modules/admin-lte/dist/js/adminlte.min.js');
 
- require('../../node_modules/admin-lte/plugins/jquery-ui/jquery-ui.min.js');
+ require('../../node_modules/admin-lte/dist/js/adminlte.min.js');
+
+require('../../node_modules/admin-lte/plugins/jquery-ui/jquery-ui.min.js');
+
+ require('../../node_modules/admin-lte/plugins/daterangepicker/daterangepicker');
 
 
 window.Vue = require('vue');

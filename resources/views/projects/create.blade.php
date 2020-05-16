@@ -28,14 +28,14 @@
                             </div>
                             <div class="form-group">
                                 <label>Thời gian bắt đầu</label>
-                                <input type="date" class="form-control" name="began_at" autocomplete="off">
+                                <input class="form-control datepicker" name="began_at" autocomplete="off">
                                 @error('began_at')
                                 <strong class="alert text-danger">{{ $message }}</strong>
                                 @enderror
                             </div>
                             <div class="form-group">
                                 <label>Thời gian kết thúc</label>
-                                <input type="date" class="form-control" name="finished_at" autocomplete="off"  value="{{ old('finished_at') }}">
+                                <input class="form-control datepicker" name="finished_at" autocomplete="off"  value="{{ old('finished_at') }}">
                                 @error('finished_at')
                                 <strong class="alert text-danger">{{ $message }}</strong>
                                 @enderror

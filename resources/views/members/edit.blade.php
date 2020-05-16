@@ -21,7 +21,7 @@
                     </div>
                     <div class="form-group">
                         <label>Password</label>
-                        <input type="password" class="form-control" name="password" autocomplete="current-password" placeholder="Enter password" value="{{ $member->password }}">
+                        <input type="password" class="form-control" name="password" autocomplete="current-password" placeholder="Enter password" value="">
                         @error('password')
                              <strong class="alert text-danger">{{ $message }}</strong>
                         @enderror

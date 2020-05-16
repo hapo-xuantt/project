@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 
@@ -44,4 +45,14 @@ class LoginController extends Controller
     {
         return Auth::guard('member');
     }
+
+    public function logout(Request $request)
+    {
+        $this->guard('member')->logout();
+
+        $request->session()->invalidate();
+
+        return $this->loggedOut($request) ?: redirect('login');
+    }
+
 }

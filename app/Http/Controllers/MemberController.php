@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\StoreMember;
 use App\Http\Requests\UpdateMember;
 use Illuminate\Support\Facades\Hash;
+use Auth;
 
 class MemberController extends Controller
 {
@@ -50,7 +51,9 @@ class MemberController extends Controller
 
     public function create()
     {
-        return view('members.create');
+        if(Auth::user()->is_admin == 1);
+           return view('members.create');
+        return view('members.index')->with('message', __('messages.permission'));;
     }
 
     /**
@@ -85,10 +88,14 @@ class MemberController extends Controller
      */
     public function edit($id)
     {
-        $data = [
-            'member' => Member::findOrFail($id),
-        ];
-        return view('members.edit', $data);
+        Member::findOrFail($id);
+        if(Auth::user()->is_admin ==  1) {
+            $data = [
+                'member' => Member::findOrFail($id),
+            ];
+            return view('members.edit', $data);
+        }
+        return view('members.index')->with('message', __('messages.permission'));;
     }
 
     /**
@@ -101,18 +108,19 @@ class MemberController extends Controller
     public function update(UpdateMember $request, $id)
     {
         $data = $request->all();
-        $imageName = uniqid() . '.' . request()->image->getClientOriginalExtension();
-        request()->image->storeAs('public/images', $imageName);
-        $imageName = 'storage/images/' . $imageName;
-        $member = [
-            'name' => $data['name'],
-            'password' => Hash::make($data['password']),
-            'account' => $data['account'],
-            'image' => $imageName,
-            'email' => $data['email'],
-            'is_admin' => $data['is_admin'],
-        ];
-        $member = Member::findOrFail($id)->update($member);
+        if($request->hasFile('image')){
+            $imageName = uniqid() . '.' . request()->image->getClientOriginalExtension();
+            request()->image->storeAs('public/images', $imageName);
+            $imageName = 'storage/images/' . $imageName;
+            $data['image'] = $imageName;
+        }
+        if (isset($data['password'])) {
+            $data['password'] = Hash::make($data['password']);
+        } else {
+            unset($data['password']);
+        }
+
+        Member::findOrFail($id)->update($data);
         return redirect()->route('members.index')->with('success', __('messages.update'));
     }
 
@@ -125,7 +133,10 @@ class MemberController extends Controller
     public function destroy($id)
     {
         $member = Member::findOrFail($id);
-        $member->delete();
-        return redirect()->route('members.index')->with('success', __('messages.destroy'));
+        if(Auth::user()->is_admin == 1) {
+            $member->delete();
+            return redirect()->route('members.index')->with('success', __('messages.destroy'));
+        }
+        return view('members.index')->with('message', __('messages.permission'));;
     }
 }

@@ -50,4 +50,5 @@ class Project extends Model
         $count = $this->members()->where('member_id', $memberId)->count();
         return $count != 0;
     }
+
 }

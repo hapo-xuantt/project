@@ -9,6 +9,11 @@
                             {{ session()->get('success') }}
                         </div><br/>
                     @endif
+                        @if(session()->get('alert'))
+                            <div class="alert alert-danger">
+                                {{ session()->get('alert') }}
+                            </div><br/>
+                        @endif
                     <div class="card-header">
                         <h3 class="card-title">Danh sách dự án</h3>
                     </div>
@@ -20,7 +25,7 @@
                             <div class="col-8 form-group">
                                 <form action="{{ route('projects.index') }}" method="GET">
                                     <div class="input-group">
-                                        <input type="search" name="searchByName" placeholder="Tên" class="form-control" value="{{ old('searchByName') }}" autocomplete="off">
+                                        <input type="search" name="searchByName" placeholder="Tên" class="form-control" value="{{ request()->input('searchByName') }}" autocomplete="off">
                                         <button type="submit" class="btn btn-primary">Tìm kiếm</button>
                                     </div>
                                 </form>

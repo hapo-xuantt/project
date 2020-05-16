@@ -15,7 +15,11 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-4 form-group">
+                                @if(Auth::user()->is_admin ==1)
                                 <a href="{{ route('customers.create') }}" class="btn btn-primary mb-2">Thêm mới</a>
+                                    @else
+                                <button class="btn btn-primary mb-2" disabled>Thêm mới</button>
+                                    @endif
                             </div>
                             <div class="col-8 form-group">
                                 <form action="{{ route('customers.index') }}" method="GET">
@@ -53,12 +57,17 @@
                                         <td class="col-2">{{ $customer->address }}</td>
                                         <td class="col-2">
                                             <div class="d-flex flex-row justify-content-center align-items-center">
+                                                @if(Auth::user()->is_admin == 1)
                                                 <a href="{{ route('customers.edit', $customer->id) }}" class="btn btn-success mr-2">Sửa</a>
                                                 <form action="{{ route('customers.destroy', $customer->id) }}" method="POST" accept-charset="utf-">
                                                     @method('DELETE')
                                                     @csrf
                                                     <button type="submit" class="btn btn-danger">Xóa</button>
                                                 </form>
+                                                    @else
+                                                <button class="btn btn-success mr-2" disabled>Sửa</button>
+                                                    <button class="btn btn-danger mr-2" disabled>Xóa</button>
+                                                    @endif
                                             </div>
                                         </td>
                                     </tr>
